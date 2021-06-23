@@ -27,7 +27,7 @@ namespace Graphite {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		std::unique_ptr<Window> m_Window;
-		bool m_Running;
+		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:
 		inline static Application* s_Instance;
