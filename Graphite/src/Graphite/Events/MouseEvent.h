@@ -22,7 +22,7 @@ namespace Graphite {
 		}
 
 		EVENT_CLASS_TYPE(MouseMoved)
-		EVENT_CATEGORY_TYPE(EventCategoryMouse | EventCategoryInput)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	private:
 		float m_MouseX, m_MouseY;
 	};

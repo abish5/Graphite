@@ -1,3 +1,9 @@
 [submodule "Graphite/vendor/spdlog"]
 	path = Graphite/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Graphite/vendor/GLFW"]
+	path = Graphite/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
+[submodule "Graphite/vendor/imgui"]
+	path = Graphite/vendor/imgui
+	url = https://github.com/TheCherno/imgui/

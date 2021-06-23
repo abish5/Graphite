@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Graphite/Log.h"
 
 #ifdef GP_PLATFORM_WINDOWS
 	#include <Windows.h>
