@@ -7,3 +7,6 @@
 [submodule "Graphite/vendor/imgui"]
 	path = Graphite/vendor/imgui
 	url = https://github.com/TheCherno/imgui/
+[submodule "Graphite/vendor/glm"]
+	path = Graphite/vendor/glm
+	url = https://github.com/g-truc/glm

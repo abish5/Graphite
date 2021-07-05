@@ -1,6 +1,11 @@
-#pragma once
+ #pragma once
 
 #include "Graphite/Layer.h"
+
+#include "Graphite/Events/ApplicationEvent.h"
+#include "Graphite/Events/KeyEvent.h"
+#include "Graphite/Events/MouseEvent.h"
+
 
 namespace Graphite {
 
@@ -10,10 +15,12 @@ namespace Graphite {
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnAttach(); 
-		void OnDetach();
-		void OnUpdate();
-		void OnEvent(Event& event);
+		virtual void OnAttach() override; 
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
+
+		void Begin();
+		void End();
 	private:
 		float m_Time = 0.0f;
 	};

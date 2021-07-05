@@ -1,5 +1,6 @@
 workspace "Graphite"
-	architecture "x86_64"
+	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -7,13 +8,15 @@ workspace "Graphite"
 		"Release",
 		"Dist"
 	}
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
---include directories relative to root folder (solution dir)
+-- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Graphite/vendor/GLFW/include"
 IncludeDir["Glad"] = "Graphite/vendor/Glad/include"
 IncludeDir["ImGui"] = "Graphite/vendor/imgui"
+IncludeDir["glm"] = "Graphite/vendor/glm"
 
 include "Graphite/vendor/GLFW"
 include "Graphite/vendor/Glad"
@@ -21,8 +24,10 @@ include "Graphite/vendor/imgui"
 
 project "Graphite"
 	location "Graphite"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -33,20 +38,28 @@ project "Graphite"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
-	includedirs 
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
+
+	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
-	
+
 	links 
-	{
+	{ 
 		"GLFW",
 		"Glad",
 		"ImGui",
@@ -54,8 +67,6 @@ project "Graphite"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -65,30 +76,27 @@ project "Graphite"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
-
 	filter "configurations:Debug"
-		defines "HZ_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
+		defines "GP_DEBUG"
+		runtime "Debug"
+		symbols "on"
 
-	filter "configurations:Debug"
+	filter "configurations:Release"
 		defines "GP_RELEASE"
-		buildoptions "/MD"
-		symbols "On"
+		runtime "Release"
+		optimize "on"
 
-	filter "configurations:Debug"
+	filter "configurations:Dist"
 		defines "GP_DIST"
-		buildoptions "/MD"
-		symbols "On"
+		runtime "Release"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -103,39 +111,34 @@ project "Sandbox"
 	{
 		"Graphite/vendor/spdlog/include",
 		"Graphite/src",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.GLAD}",
-		"%{IncludeDir.ImGui}"
+		"Graphite/vendor",
+		"%{IncludeDir.glm}"
 	}
 
 	links
 	{
-		"Graphite",
-		"ImGui"
+		"Graphite"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "Off"
 		systemversion "latest"
 
 		defines
 		{
-			"GP_PLATFORM_WINDOWS",
-			"GP_BUILD_DLL"
+			"GP_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
-		defines "HZ_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
+		defines "GP_DEBUG"
+		runtime "Debug"
+		symbols "on"
 
-	filter "configurations:Debug"
+	filter "configurations:Release"
 		defines "GP_RELEASE"
-		buildoptions "/MD"
-		symbols "On"
+		runtime "Release"
+		optimize "on"
 
-	filter "configurations:Debug"
+	filter "configurations:Dist"
 		defines "GP_DIST"
-		buildoptions "/MD"
-		symbols "On"
+		runtime "Release"
+		optimize "on"

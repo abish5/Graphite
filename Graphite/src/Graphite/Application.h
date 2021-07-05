@@ -4,8 +4,9 @@
 #include "Events/Event.h"
 #include "Window.h"
 #include "Graphite/Events/ApplicationEvent.h"
-#include "Platform/Windows/WindowsWindow.h"
 #include "Graphite/LayerStack.h"
+
+#include "Graphite/ImGui/ImGuiLayer.h"
 
 namespace Graphite {
 	class GRAPHITE_API Application
@@ -27,7 +28,8 @@ namespace Graphite {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		std::unique_ptr<Window> m_Window;
-		bool m_Running;
+		ImGuiLayer* m_ImGuiLayer;
+		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:
 		inline static Application* s_Instance;

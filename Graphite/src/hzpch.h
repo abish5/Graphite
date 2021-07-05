@@ -5,8 +5,9 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
-#include <sstream>
 
+#define _CRT_SECURE_NO_WARNINGS
+#include <sstream>
 #include <string>
 #include <vector>
 #include <unordered_map>
