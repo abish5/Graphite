@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hzpch.h"
+#include "gppch.h"
 
 #include "Graphite/Core.h"
 #include "Graphite/Events/Event.h"

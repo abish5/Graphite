@@ -5,8 +5,10 @@
 #include "Window.h"
 #include "Graphite/Events/ApplicationEvent.h"
 #include "Graphite/LayerStack.h"
-
 #include "Graphite/ImGui/ImGuiLayer.h"
+
+#include "Graphite/Renderer/Shader.h"
+#include "Graphite/Renderer/Buffer.h"
 
 namespace Graphite {
 	class GRAPHITE_API Application
@@ -31,6 +33,12 @@ namespace Graphite {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+
+		uint32_t m_VertexArray;
+
+		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 	private:
 		inline static Application* s_Instance;
 	};

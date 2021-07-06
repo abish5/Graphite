@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hzpch.h"
+#include "gppch.h"
 #include "Layer.h"
 
 namespace Graphite {
@@ -11,4 +11,4 @@ namespace Graphite {
 
 	Layer::~Layer()
 	{}
-}
+} 
