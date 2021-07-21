@@ -479,7 +479,7 @@ PFNGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC glad_glDrawTransformFeedbackInstanced = 
 PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC glad_glDrawTransformFeedbackStream = NULL;
 PFNGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC glad_glDrawTransformFeedbackStreamInstanced = NULL;
 PFNGLEDGEFLAGPROC glad_glEdgeFlag = NULL;
-PFNGLEDGEFLAGPOINTERPROC glad_glEdgeFlagPointer = NULL;
+PFNGLEDGEFLAGPOINTERPROC glad_glEdgeFlaGPointer = NULL;
 PFNGLEDGEFLAGVPROC glad_glEdgeFlagv = NULL;
 PFNGLENABLEPROC glad_glEnable = NULL;
 PFNGLENABLECLIENTSTATEPROC glad_glEnableClientState = NULL;
@@ -1650,7 +1650,7 @@ static void load_GL_VERSION_1_1(GLADloadproc load) {
 	glad_glArrayElement = (PFNGLARRAYELEMENTPROC)load("glArrayElement");
 	glad_glColorPointer = (PFNGLCOLORPOINTERPROC)load("glColorPointer");
 	glad_glDisableClientState = (PFNGLDISABLECLIENTSTATEPROC)load("glDisableClientState");
-	glad_glEdgeFlagPointer = (PFNGLEDGEFLAGPOINTERPROC)load("glEdgeFlagPointer");
+	glad_glEdgeFlaGPointer = (PFNGLEDGEFLAGPOINTERPROC)load("glEdgeFlaGPointer");
 	glad_glEnableClientState = (PFNGLENABLECLIENTSTATEPROC)load("glEnableClientState");
 	glad_glIndexPointer = (PFNGLINDEXPOINTERPROC)load("glIndexPointer");
 	glad_glInterleavedArrays = (PFNGLINTERLEAVEDARRAYSPROC)load("glInterleavedArrays");

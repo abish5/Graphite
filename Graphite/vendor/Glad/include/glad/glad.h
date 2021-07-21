@@ -2918,8 +2918,8 @@ typedef void (APIENTRYP PFNGLDISABLECLIENTSTATEPROC)(GLenum array);
 GLAPI PFNGLDISABLECLIENTSTATEPROC glad_glDisableClientState;
 #define glDisableClientState glad_glDisableClientState
 typedef void (APIENTRYP PFNGLEDGEFLAGPOINTERPROC)(GLsizei stride, const void *pointer);
-GLAPI PFNGLEDGEFLAGPOINTERPROC glad_glEdgeFlagPointer;
-#define glEdgeFlagPointer glad_glEdgeFlagPointer
+GLAPI PFNGLEDGEFLAGPOINTERPROC glad_glEdgeFlaGPointer;
+#define glEdgeFlaGPointer glad_glEdgeFlaGPointer
 typedef void (APIENTRYP PFNGLENABLECLIENTSTATEPROC)(GLenum array);
 GLAPI PFNGLENABLECLIENTSTATEPROC glad_glEnableClientState;
 #define glEnableClientState glad_glEnableClientState
