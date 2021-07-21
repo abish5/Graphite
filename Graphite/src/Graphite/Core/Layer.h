@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Graphite/Core.h"
+#include "Graphite/Core/Core.h"
+#include "Graphite/Core/Timestep.h"
 #include "Graphite/Events/Event.h"
 
 namespace Graphite {
@@ -13,7 +14,7 @@ namespace Graphite {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 

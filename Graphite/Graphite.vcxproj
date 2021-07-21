@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>gppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GP_PLATFORM_WINDOWS;GP_BUILD_DLL;GLFW_INCLUDE_NONE;GP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\imgui\examples;src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -94,7 +94,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>gppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GP_PLATFORM_WINDOWS;GP_BUILD_DLL;GLFW_INCLUDE_NONE;GP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -118,7 +118,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>gppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GP_PLATFORM_WINDOWS;GP_BUILD_DLL;GLFW_INCLUDE_NONE;GP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -141,34 +141,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphite.h" />
-    <ClInclude Include="src\Graphite\Application.h" />
-    <ClInclude Include="src\Graphite\Core.h" />
-    <ClInclude Include="src\Graphite\EntryPoint.h" />
+    <ClInclude Include="src\Graphite\Core\Application.h" />
+    <ClInclude Include="src\Graphite\Core\Core.h" />
+    <ClInclude Include="src\Graphite\Core\EntryPoint.h" />
+    <ClInclude Include="src\Graphite\Core\Input.h" />
+    <ClInclude Include="src\Graphite\Core\KeyCodes.h" />
+    <ClInclude Include="src\Graphite\Core\Layer.h" />
+    <ClInclude Include="src\Graphite\Core\LayerStack.h" />
+    <ClInclude Include="src\Graphite\Core\Log.h" />
+    <ClInclude Include="src\Graphite\Core\MouseCodes.h" />
+    <ClInclude Include="src\Graphite\Core\Timestep.h" />
+    <ClInclude Include="src\Graphite\Core\Window.h" />
     <ClInclude Include="src\Graphite\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Graphite\Events\Event.h" />
     <ClInclude Include="src\Graphite\Events\KeyEvent.h" />
     <ClInclude Include="src\Graphite\Events\MouseEvent.h" />
     <ClInclude Include="src\Graphite\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Graphite\Input.h" />
-    <ClInclude Include="src\Graphite\KeyCodes.h" />
-    <ClInclude Include="src\Graphite\Layer.h" />
-    <ClInclude Include="src\Graphite\LayerStack.h" />
-    <ClInclude Include="src\Graphite\Log.h" />
-    <ClInclude Include="src\Graphite\MouseButtonCodes.h" />
     <ClInclude Include="src\Graphite\Renderer\Buffer.h" />
+    <ClInclude Include="src\Graphite\Renderer\Camera.h" />
     <ClInclude Include="src\Graphite\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Graphite\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Graphite\Renderer\Renderer.h" />
     <ClInclude Include="src\Graphite\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Graphite\Renderer\Shader.h" />
     <ClInclude Include="src\Graphite\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Graphite\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\gppch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -586,20 +587,19 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="vendor\imgui\examples\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\imgui\examples\imgui_impl_opengl3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphite\Application.cpp" />
+    <ClCompile Include="src\Graphite\Core\Application.cpp" />
+    <ClCompile Include="src\Graphite\Core\Layer.cpp" />
+    <ClCompile Include="src\Graphite\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Graphite\Core\Log.cpp" />
     <ClCompile Include="src\Graphite\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Graphite\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Graphite\Layer.cpp" />
-    <ClCompile Include="src\Graphite\LayerStack.cpp" />
-    <ClCompile Include="src\Graphite\Log.cpp" />
     <ClCompile Include="src\Graphite\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Graphite\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Graphite\Renderer\Camera.cpp" />
     <ClCompile Include="src\Graphite\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Graphite\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Graphite\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Graphite\Renderer\Shader.cpp" />
     <ClCompile Include="src\Graphite\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />

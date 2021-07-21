@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphite/Window.h"
+#include "Graphite/Core/Window.h"
 #include "Graphite/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Graphite/Log.h"
+#include "Graphite/Core/Log.h"
 
 #ifdef GP_PLATFORM_WINDOWS
 	#include <Windows.h>

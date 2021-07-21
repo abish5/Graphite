@@ -2,7 +2,7 @@
 
 #include "gppch.h"
 
-#include "Graphite/Core.h"
+#include "Graphite/Core/Core.h"
 #include "Graphite/Events/Event.h"
 
 namespace Graphite {

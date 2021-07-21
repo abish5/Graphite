@@ -1,12 +1,14 @@
 #pragma once
+
 #include <string>
+#include <glm/glm.hpp>
 
 namespace Graphite {
 
 	class Shader
 	{
 	public:
-		virtual ~Shader() {};
+		virtual ~Shader() = default;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;

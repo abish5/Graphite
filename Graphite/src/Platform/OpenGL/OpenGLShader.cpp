@@ -3,7 +3,10 @@
 
 #include <glad/glad.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace Graphite {
+
 	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
 		// Create an empty vertex shader handle
@@ -33,7 +36,6 @@ namespace Graphite {
 
 			GP_CORE_ERROR("{0}", infoLog.data());
 			GP_CORE_ASSERT(false, "Vertex shader compilation failure!");
-
 			return;
 		}
 
@@ -63,10 +65,8 @@ namespace Graphite {
 			// Either of them. Don't leak shaders.
 			glDeleteShader(vertexShader);
 
-			// Use the infoLog as you see fit.
 			GP_CORE_ERROR("{0}", infoLog.data());
 			GP_CORE_ASSERT(false, "Fragment shader compilation failure!");
-			// In this simple program, we'll just leave
 			return;
 		}
 
@@ -101,11 +101,8 @@ namespace Graphite {
 			glDeleteShader(vertexShader);
 			glDeleteShader(fragmentShader);
 
-			// Use the infoLog as you see fit.
 			GP_CORE_ERROR("{0}", infoLog.data());
 			GP_CORE_ASSERT(false, "Shader link failure!");
-
-			// In this simple program, we'll just leave
 			return;
 		}
 
@@ -128,4 +125,47 @@ namespace Graphite {
 	{
 		glUseProgram(0);
 	}
+
+	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1f(location, value);
+	}
+
+	void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2f(location, value.x, value.y);
+	}
+
+	void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform3f(location, value.x, value.y, value.z);
+	}
+
+	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
+	void OpenGLShader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
 }

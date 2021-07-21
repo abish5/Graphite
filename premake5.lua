@@ -32,8 +32,8 @@ project "Graphite"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "hzpch.h"
-	pchsource "Graphite/src/hzpch.cpp"
+	pchheader "gppch.h"
+	pchsource "Graphite/src/gppch.cpp"
 
 	files
 	{
@@ -117,7 +117,7 @@ project "Sandbox"
 
 	links
 	{
-		"Graphite"
+		"Graphite",
 	}
 
 	filter "system:windows"

@@ -1,6 +1,6 @@
 #include "gppch.h"
 #include "WindowsWindow.h"
-#include "Graphite/Log.h"
+#include "Graphite/Core/Log.h"
 
 #include "Graphite/Events/KeyEvent.h"
 #include "Graphite/Events/MouseEvent.h"

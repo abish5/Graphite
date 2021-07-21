@@ -1,18 +1,15 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
 #include "Window.h"
+#include "Graphite/Events/Event.h"
 #include "Graphite/Events/ApplicationEvent.h"
-#include "Graphite/LayerStack.h"
+#include "Graphite/Core/LayerStack.h"
+#include "Graphite/Core/Timestep.h"
 #include "Graphite/ImGui/ImGuiLayer.h"
 
-#include "Graphite/Renderer/Shader.h"
-#include "Graphite/Renderer/Buffer.h"
-#include "Graphite/Renderer/VertexArray.h"
-
 namespace Graphite {
-	class GRAPHITE_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -30,16 +27,12 @@ namespace Graphite {
 		inline static Application& Get() { return *s_Instance;  }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
+		float m_LastFrameTime = 0.0f;
 	private:
 		inline static Application* s_Instance;
 	};

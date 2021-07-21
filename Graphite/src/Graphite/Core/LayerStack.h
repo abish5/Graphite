@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphite/Core.h"
+#include "Graphite/Core/Core.h"
 #include "Layer.h"
 
 #include <vector>
