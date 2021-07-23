@@ -8,7 +8,7 @@ namespace Graphite {
 	class OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const char* vertexPath, const char* fragmentPath);
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;
@@ -23,6 +23,10 @@ namespace Graphite {
 
 		void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
 		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
+	
+	private:
+		std::string readShaderFile(const char* filePath);
+
 	private:
 		uint32_t m_RendererID;
 	};
