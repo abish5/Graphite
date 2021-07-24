@@ -10,3 +10,6 @@
 [submodule "Graphite/vendor/imgui"]
 	path = Graphite/vendor/imgui
 	url = https://github.com/TheCherno/Hazel/imgui
+[submodule "Graphite/vendor/stb"]
+	path = Graphite/vendor/stb
+	url = https://github.com/nothings/stb

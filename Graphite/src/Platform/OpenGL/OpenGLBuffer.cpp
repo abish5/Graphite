@@ -26,7 +26,7 @@ namespace Graphite {
 	}
 	void OpenGLVertexBuffer::Unbind() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
 	// ////// INDEX BUFFER ////// ///

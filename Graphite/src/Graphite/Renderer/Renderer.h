@@ -3,6 +3,7 @@
 #include "RenderCommand.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Texture.h"
 
 namespace Graphite {
 
@@ -12,6 +13,7 @@ namespace Graphite {
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<Shader>& shader,const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform);
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform, const std::shared_ptr<Texture>& texture);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:

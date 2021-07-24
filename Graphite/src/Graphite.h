@@ -17,6 +17,7 @@
 
 #include "Graphite/Renderer/Buffer.h"
 #include "Graphite/Renderer/Shader.h"
+#include "Graphite/Renderer/Texture.h"
 #include "Graphite/Renderer/VertexArray.h"
 
 #include "Graphite/Renderer/Camera.h"

@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "Graphite/vendor/GLFW/include"
 IncludeDir["Glad"] = "Graphite/vendor/Glad/include"
 IncludeDir["ImGui"] = "Graphite/vendor/imgui"
 IncludeDir["glm"] = "Graphite/vendor/glm"
+IncludeDir["stb_image"] = "Graphite/vendor/stb_image"
 
 include "Graphite/vendor/GLFW"
 include "Graphite/vendor/Glad"
@@ -39,6 +40,8 @@ project "Graphite"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -55,7 +58,8 @@ project "Graphite"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links 

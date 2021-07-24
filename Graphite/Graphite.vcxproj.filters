@@ -1392,6 +1392,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphite\Renderer\SpriteRenderer.h" />
+    <ClInclude Include="src\Graphite\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphite\Core\Application.cpp">
@@ -1457,5 +1459,8 @@
     <ClCompile Include="src\gppch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphite\Renderer\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Graphite\Renderer\Texture.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
 </Project>

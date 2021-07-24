@@ -11,14 +11,17 @@ class ExampleLayer : public Graphite::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+		: Layer("Example"), m_Camera(-1.6f, 1.6, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		m_VertexArray.reset(Graphite::VertexArray::Create());
 
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+		m_Texture.reset(new Graphite::Texture("src/Textures/wall.jpg"));
+
+		float vertices[4 * 9] = {
+			0.5f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f, 0.0f, 0.0f,
+			-0.5f, 0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f, 0.0f, 1.0f,
 		};
 
 		std::shared_ptr<Graphite::VertexBuffer> vertexBuffer;
@@ -26,17 +29,18 @@ public:
 		Graphite::BufferLayout layout = {
 			{ Graphite::ShaderDataType::Float3, "a_Position" },
 			{ Graphite::ShaderDataType::Float4, "a_Color" },
-
+			{ Graphite::ShaderDataType::Float2, "a_TexCoord"},
 		};
 
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		uint32_t indices[3] = { 0, 1, 2 };
+		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0};
 		std::shared_ptr<Graphite::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Graphite::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
+		// Squares
 		m_SquareVA.reset(Graphite::VertexArray::Create());
 
 		float squareVertices[3 * 4] = {
@@ -105,7 +109,9 @@ public:
 				Graphite::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
-		Graphite::Renderer::Submit(m_Shader, m_VertexArray, glm::mat4(1.0f));
+
+		
+		Graphite::Renderer::Submit(m_Shader, m_VertexArray, glm::mat4(1.0f), m_Texture);
 
 		Graphite::Renderer::EndScene();
 	}
@@ -124,6 +130,7 @@ public:
 private:
 	std::shared_ptr<Graphite::Shader> m_Shader;
 	std::shared_ptr<Graphite::VertexArray> m_VertexArray;
+	std::shared_ptr<Graphite::Texture> m_Texture;
 
 	std::shared_ptr<Graphite::Shader> m_FlatColorShader;
 	std::shared_ptr<Graphite::VertexArray> m_SquareVA;

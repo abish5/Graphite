@@ -14,6 +14,8 @@ namespace Graphite {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
+		virtual uint32_t getID() const override { return m_RendererID; }
+
 		void UploadUniformInt(const std::string& name, int value);
 
 		void UploadUniformFloat(const std::string& name, float value);
