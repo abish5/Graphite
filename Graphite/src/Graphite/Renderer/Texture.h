@@ -9,6 +9,8 @@ namespace Graphite {
 		void Bind();
 		void Unbind();
 
+		uint32_t getID();
+
 	private:
 		uint32_t m_RendererID;
 

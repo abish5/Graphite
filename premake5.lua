@@ -116,7 +116,8 @@ project "Sandbox"
 		"Graphite/vendor/spdlog/include",
 		"Graphite/src",
 		"Graphite/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links

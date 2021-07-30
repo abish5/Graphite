@@ -68,7 +68,7 @@ namespace Graphite {
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
+				layer->OnImGuiRender(timestep);
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();

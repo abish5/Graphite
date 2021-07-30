@@ -14,6 +14,7 @@
 // --- Renderer    -------------
 #include "Graphite/Renderer/Renderer.h"
 #include "Graphite/Renderer/RenderCommand.h"
+#include "Graphite/Renderer/SpriteRenderer.h"
 
 #include "Graphite/Renderer/Buffer.h"
 #include "Graphite/Renderer/Shader.h"
