@@ -21,7 +21,6 @@ namespace Graphite {
 		unsigned char* data = stbi_load(textPath, &width, &height, &nrChannels, 0);
 		if (data)
 		{
-			//GP_CORE_INFO("width: {0}: ", width);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
@@ -29,6 +28,7 @@ namespace Graphite {
 			GP_CORE_ERROR("FAILED TO LOAD TEXTURE");
 		}	
 		stbi_image_free(data);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	Texture::Texture()
 	{

@@ -4,9 +4,11 @@
     <ClCompile Include="src\SandboxApp.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameLevel.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameLevel.h" />
+    <ClInclude Include="src\Player.h" />
   </ItemGroup>
 </Project>

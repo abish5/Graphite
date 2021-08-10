@@ -11,30 +11,32 @@ namespace Graphite {
 	class SpriteRenderer
 	{
 	public:
-		SpriteRenderer(std::shared_ptr<Shader> shader, glm::mat4 VPmatrix);
+		SpriteRenderer(glm::mat4 VPmatrix);
 		~SpriteRenderer();
 		
 		template<typename T>
 		void MultiDraw(std::vector<T> bgTiles, std::shared_ptr<Graphite::Texture> texture);
 
-		void DrawSprite(std::shared_ptr<Graphite::Texture> texture, glm::vec3 position, glm::vec2 size = glm::vec2(1.0f, 1.0f),
+		void DrawSprite(int shaderPos, std::shared_ptr<Graphite::Texture> texture, glm::vec3 position, glm::vec2 size = glm::vec2(1.0f, 1.0f),
 			float m_SpriteCoordX = 0.f, float m_SpriteCoordY = 0.f, float rotate = 0.0f,
 			glm::vec3 color = glm::vec3(1.0f));
 
 		void SetVPMatrix(glm::mat4 VP) { m_VPmatrix = VP; }
+		void AddShader(std::shared_ptr<Shader>);
+
+		void InitRenderData();
 	private:
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-		uint32_t m_CurrentVB;
+		std::vector<std::shared_ptr<Shader>> m_Shaders;
+		std::vector<std::shared_ptr<VertexArray>> m_VertexArray;
+		std::vector<uint32_t> m_CurrentVB;
 		glm::mat4 m_VPmatrix;
 
-		void initRenderData();
 	};
 
 	template<typename T>
 	void SpriteRenderer::MultiDraw(std::vector<T> bgTiles, std::shared_ptr<Graphite::Texture> texture)
 	{
-		m_Shader->Bind();
+		m_Shaders.at(0)->Bind();				// HARD CODED TO SHADER 0
 		std::vector<uint32_t> indices;
 		std::vector<float> vertices;
 		uint32_t firstIndex = 0; // start of the index of a quad
@@ -57,30 +59,30 @@ namespace Graphite {
 				0.0f + bgTiles[i].m_Position.x, 1.0f + bgTiles[i].m_Position.y, 0.0f, ((x * spriteWidth) / sheetWidth), (((y + 1) * spriteHeight) / sheetHeight) };
 			vertices.insert(vertices.end(), v.begin(), v.end());
 		}
-		//GP_INFO("indices: {0}", indices.size());
-		//GP_INFO("vertices: {0}", vertices.size());
+
 		//set new dynamic index buffer
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset(IndexBuffer::Create(indices.data(), indices.size()));
 
-		m_VertexArray->SetIndexBuffer(indexBuffer);
+		m_VertexArray.at(0)->SetIndexBuffer(indexBuffer);
 
 		// Setting Dynamic Buffer
-		glBindBuffer(GL_ARRAY_BUFFER, m_CurrentVB);
+		glBindBuffer(GL_ARRAY_BUFFER, m_CurrentVB.at(0));
 		glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(float), vertices.data());
 	
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(0, texture->getID());
+		texture->Bind();
+		//GP_INFO("Texture: {0}", texture->getID());
 		//set model matrix
 		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(bgTiles.at(i).m_Position));
 		//send uniforms to shader
-		std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformMat4("u_Model", model);
-		//std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformFloat3("u_SpriteColor", bgTiles.at(i).m_Color);
-		std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformMat4("u_ViewProjection", m_VPmatrix);
-		m_VertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-		m_VertexArray->Unbind();
+		std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(0))->UploadUniformMat4("u_Model", model);
+		//std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(0))->UploadUniformFloat3("u_SpriteColor", bgTiles.at(i).m_Color);
+		std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(0))->UploadUniformMat4("u_ViewProjection", m_VPmatrix);
+		m_VertexArray.at(0)->Bind();
+		glDrawElements(GL_TRIANGLES, m_VertexArray.at(0)->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		m_VertexArray.at(0)->Unbind();
+		texture->Unbind();
 	}
 
 }

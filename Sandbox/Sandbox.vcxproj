@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GP_PLATFORM_WINDOWS;GP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Graphite\vendor\spdlog\include;..\Graphite\src;..\Graphite\vendor;..\Graphite\vendor\glm;..\Graphite\vendor\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Graphite\vendor\spdlog\include;..\Graphite\src;..\Graphite\vendor;..\Graphite\vendor\glm;C:\dev\Graphite\Sandbox\src;..\Graphite\vendor\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -134,6 +134,7 @@
     <ClCompile Include="src\GameLevel.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphite\Graphite.vcxproj">
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="src\GameLevel.h" />
     <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

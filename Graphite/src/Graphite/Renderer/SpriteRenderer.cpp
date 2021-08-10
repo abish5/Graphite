@@ -5,18 +5,24 @@
 
 namespace Graphite {
 
-	SpriteRenderer::SpriteRenderer(std::shared_ptr<Shader> shader, glm::mat4 VPmatrix)
-		: m_Shader(shader), m_CurrentVB(0), m_VPmatrix(VPmatrix)
+	SpriteRenderer::SpriteRenderer(glm::mat4 VPmatrix)
+		: m_CurrentVB(0), m_VPmatrix(VPmatrix)
 	{
-		initRenderData();
 	}
 
 	SpriteRenderer::~SpriteRenderer()
 	{
 	}
-	void SpriteRenderer::initRenderData()
+	void SpriteRenderer::AddShader(std::shared_ptr<Shader> shader)
 	{
-		m_VertexArray.reset(Graphite::VertexArray::Create());
+		m_Shaders.push_back(shader);
+	}
+	void SpriteRenderer::InitRenderData()
+	{
+		std::shared_ptr<VertexArray> currVertArray;
+		uint32_t VBO;
+
+		currVertArray.reset(Graphite::VertexArray::Create());
 		std::shared_ptr<VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(VertexBuffer::Create(nullptr, 1000 * 5 * sizeof(float)));
 		BufferLayout layout = {
@@ -30,18 +36,21 @@ namespace Graphite {
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		currVertArray->SetIndexBuffer(indexBuffer);
+		currVertArray->AddVertexBuffer(vertexBuffer);
 		
-		m_CurrentVB = vertexBuffer->GetID();
+		VBO = vertexBuffer->GetID();
+
+		m_VertexArray.push_back(currVertArray);
+		m_CurrentVB.push_back(VBO);
 	}
 
-	void SpriteRenderer::DrawSprite(std::shared_ptr<Graphite::Texture> texture, glm::vec3 position, glm::vec2 size, float m_SpriteCoordX, float m_SpriteCoordY, float rotate, glm::vec3 color)
+	void SpriteRenderer::DrawSprite(int shaderPos, std::shared_ptr<Graphite::Texture> texture, glm::vec3 position, glm::vec2 size, float m_SpriteCoordX, float m_SpriteCoordY, float rotate, glm::vec3 color)
 	{
-		m_Shader->Bind();
+		m_Shaders.at(shaderPos)->Bind();
 
-		float sheetWidth = 288.f, sheetHeight = 176.f;
-		float spriteWidth = 16.f, spriteHeight = 16.f;
+		float sheetWidth = 128.f, sheetHeight = 128.f;
+		float spriteWidth = 11.f, spriteHeight = 12.f;
 
 		float vertices[] = {
 			0.0f, 0.0f, 0.0f, ((m_SpriteCoordX * spriteWidth) / sheetWidth), ((m_SpriteCoordY * spriteHeight) / sheetHeight),
@@ -51,25 +60,26 @@ namespace Graphite {
 		};
 
 		// Setting Dynamic Buffer
-		glBindBuffer(GL_ARRAY_BUFFER, m_CurrentVB);
+		glBindBuffer(GL_ARRAY_BUFFER, m_CurrentVB.at(shaderPos));
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(0, texture->getID());
+		texture->Bind();
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(position));
 
-		//model = glm::scale(model, glm::vec3(size, 1.0f));
+		//model = glm::scale(model, glm::vec3(size, 5.0f));
 
-		std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformMat4("u_Model", model);
-		std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformFloat3("u_SpriteColor", color);
-		std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformMat4("u_ViewProjection", m_VPmatrix);
-		//std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->UploadUniformMat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(shaderPos))->UploadUniformMat4("u_Model", model);
+		std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(shaderPos))->UploadUniformFloat3("u_SpriteColor", color);
+		std::dynamic_pointer_cast<OpenGLShader>(m_Shaders.at(shaderPos))->UploadUniformMat4("u_ViewProjection", m_VPmatrix);
 
 
-		m_VertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-		m_VertexArray->Unbind();
+		m_VertexArray.at(shaderPos)->Bind();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glDrawElements(GL_TRIANGLES, m_VertexArray.at(shaderPos)->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		m_VertexArray.at(shaderPos)->Unbind();
+		texture->Unbind();
 	}
 }
